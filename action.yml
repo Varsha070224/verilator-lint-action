@@ -1,0 +1,28 @@
+name: "Verilator Lint Action"
+
+description: "Run Verilator lint"
+
+inputs:
+  sv_files:
+    description: "List of .sv files"
+    required: true
+
+  severity:
+    description: "Lint severity"
+    required: false
+    default: "warning"
+
+outputs:
+  results:
+    description: "JSON lint result"
+
+runs:
+  using: "composite"
+
+  steps:
+    - shell: bash
+      run: |
+        python ${{ github.action_path }}/lint.py
+      env:
+        SV_FILES: ${{ inputs.sv_files }}
+        SEVERITY: ${{ inputs.severity }}
